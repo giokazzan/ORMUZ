@@ -1716,6 +1716,122 @@ nav.show{opacity:1;}
   .nos-title { font-size: 3.5rem; }
 }
 
+
+/* ── CONTACTO ── */
+#contacto {
+  background: #0a0a0a;
+  color: #fff;
+  padding: 0;
+}
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6vw;
+  padding: 8vh 6vw;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  align-items: start;
+}
+.contact-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c8f080;
+  margin-bottom: 1.2rem;
+}
+.contact-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0 0 1.2rem;
+  color: #fff;
+}
+.contact-title em { font-style: normal; font-weight: 300; color: rgba(255,255,255,0.4); }
+.contact-desc {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2rem;
+  max-width: 320px;
+}
+.contact-chat-link {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #c8f080;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(200,240,128,0.3);
+  padding-bottom: 0.1em;
+  transition: border-color 0.2s;
+}
+.contact-chat-link:hover { border-color: #c8f080; }
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 300;
+  padding: 0.85rem 1rem;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: rgba(255,255,255,0.2); }
+.contact-form input:focus,
+.contact-form textarea:focus { border-color: rgba(200,240,128,0.4); }
+#cf-submit {
+  background: #fff;
+  color: #0a0a0a;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1em 2em;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 2px;
+}
+#cf-submit:hover { background: #c8f080; }
+.contact-ok {
+  display: none;
+  font-size: 0.8rem;
+  color: #c8f080;
+  letter-spacing: 0.05em;
+}
+.contact-ok.show { display: block; }
+.contact-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 6vw;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+.contact-bottom a {
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-bottom a:hover { color: #c8f080; }
+@media(max-width:900px){
+  .contact-wrap { grid-template-columns: 1fr; }
+}
+
 </style>
 
 <!-- ══════════════════════════════════════════════
@@ -2105,65 +2221,31 @@ nav.show{opacity:1;}
   </div>
 </section>
 
-/* ════════════════════════════════════════
-   NOSOTROS — panal oscuro con cursor
-════════════════════════════════════════ */
-(function initNosHex(){
-  const cv=document.getElementById('nos-canvas');
-  if(!cv)return;
-  const ctx=cv.getContext('2d');
-  function rsz(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;buildG();}
-  const HR=40,HG=1.5;
-  function hpts(cx,cy,r){
-    const p=[];
-    for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)]);}
-    return p;
-  }
-  let g=[];
-  function buildG(){
-    g=[];
-    const colW=HR*Math.sqrt(3),rowH=HR*1.5;
-    const cols=Math.ceil(cv.width/colW)+3,rows=Math.ceil(cv.height/rowH)+3;
-    for(let row=-1;row<rows;row++){
-      for(let col=-1;col<cols;col++){
-        const off=(col%2!==0)?HR*.866:0;
-        g.push({cx:col*colW,cy:row*rowH+off,phase:Math.random()*Math.PI*2,base:Math.random()*.012+.004,lit:0});
-      }
-    }
-  }
-  rsz();new ResizeObserver(rsz).observe(cv);
-  let mx=-9999,my=-9999;
-  document.addEventListener('mousemove',function(e){
-    const r=cv.getBoundingClientRect();
-    mx=e.clientX-r.left;my=e.clientY-r.top;
-  });
-  let t=0;
-  (function draw(now){
-    t=now*.001;
-    ctx.clearRect(0,0,cv.width,cv.height);
-    g.forEach(function(hex){
-      const dist=Math.hypot(mx-hex.cx,my-hex.cy);
-      const glow=Math.max(0,1-dist/180);
-      hex.lit+=(glow-hex.lit)*.07;
-      const a=hex.base+Math.sin(t*.25+hex.phase)*.003+hex.lit*.2;
-      if(a<.002)return;
-      const pts=hpts(hex.cx,hex.cy,HR-HG);
-      ctx.beginPath();
-      pts.forEach(function(p,i){i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);});
-      ctx.closePath();
-      ctx.strokeStyle=`rgba(255,255,255,${a})`;
-      ctx.lineWidth=.5;ctx.stroke();
-      if(hex.lit>.08){
-        ctx.strokeStyle=`rgba(200,240,128,${hex.lit*.3})`;
-        ctx.lineWidth=1;ctx.stroke();
-      }
-    });
-    requestAnimationFrame(draw);
-  })();
-})();
-
-
-
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <div class="contact-label">Contacto directo</div>
+      <h3 class="contact-title">¿Prefieres escribirnos<br><em>directamente?</em></h3>
+      <p class="contact-desc">Sin complicaciones. Cuéntanos qué necesitas y te respondemos.</p>
+      <a href="#h3" class="contact-chat-link">O habla con nuestra IA →</a>
+    </div>
+    <form class="contact-form" id="contact-form">
+      <input type="text" id="cf-nombre" placeholder="Tu nombre" required>
+      <input type="email" id="cf-email" placeholder="Tu correo" required>
+      <input type="tel" id="cf-tel" placeholder="Tu teléfono (opcional)">
+      <textarea id="cf-msg" placeholder="¿En qué podemos ayudarte?" rows="4" required></textarea>
+      <button type="submit" id="cf-submit">
+        <span id="cf-btn-text">Enviar mensaje →</span>
+      </button>
+      <div class="contact-ok" id="cf-ok">✓ Mensaje enviado. Te contactamos pronto.</div>
+    </form>
+  </div>
+  <div class="contact-bottom">
+    <span>ORMUZ · Cancún, México · 2024</span>
+    <a href="mailto:ormuzdetec@gmail.com">ormuzdetec@gmail.com</a>
+  </div>
+</section>
 
 </div>
 
@@ -2793,6 +2875,97 @@ document.querySelectorAll('img').forEach(img=>{
     el.style.pointerEvents='none'; /* el glow canvas maneja los eventos */
   }
 });
+
+/* ════════════════════════════════════════
+   NOSOTROS — panal oscuro con cursor
+════════════════════════════════════════ */
+(function initNosHex(){
+  const cv=document.getElementById('nos-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  function rsz(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;buildG();}
+  const HR=40,HG=1.5;
+  function hpts(cx,cy,r){
+    const p=[];
+    for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)]);}
+    return p;
+  }
+  let g=[];
+  function buildG(){
+    g=[];
+    const colW=HR*Math.sqrt(3),rowH=HR*1.5;
+    const cols=Math.ceil(cv.width/colW)+3,rows=Math.ceil(cv.height/rowH)+3;
+    for(let row=-1;row<rows;row++){
+      for(let col=-1;col<cols;col++){
+        const off=(col%2!==0)?HR*.866:0;
+        g.push({cx:col*colW,cy:row*rowH+off,phase:Math.random()*Math.PI*2,base:Math.random()*.012+.004,lit:0});
+      }
+    }
+  }
+  rsz();new ResizeObserver(rsz).observe(cv);
+  let mx=-9999,my=-9999;
+  document.addEventListener('mousemove',function(e){
+    const r=cv.getBoundingClientRect();
+    mx=e.clientX-r.left;my=e.clientY-r.top;
+  });
+  let t=0;
+  (function draw(now){
+    t=now*.001;
+    ctx.clearRect(0,0,cv.width,cv.height);
+    g.forEach(function(hex){
+      const dist=Math.hypot(mx-hex.cx,my-hex.cy);
+      const glow=Math.max(0,1-dist/180);
+      hex.lit+=(glow-hex.lit)*.07;
+      const a=hex.base+Math.sin(t*.25+hex.phase)*.003+hex.lit*.2;
+      if(a<.002)return;
+      const pts=hpts(hex.cx,hex.cy,HR-HG);
+      ctx.beginPath();
+      pts.forEach(function(p,i){i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);});
+      ctx.closePath();
+      ctx.strokeStyle=`rgba(255,255,255,${a})`;
+      ctx.lineWidth=.5;ctx.stroke();
+      if(hex.lit>.08){
+        ctx.strokeStyle=`rgba(200,240,128,${hex.lit*.3})`;
+        ctx.lineWidth=1;ctx.stroke();
+      }
+    });
+    requestAnimationFrame(draw);
+  })();
+})();
+
+/* ── FORMULARIO CONTACTO ── */
+(function initContactForm(){
+  const form = document.getElementById('contact-form');
+  if(!form) return;
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = document.getElementById('cf-submit');
+    const btnText = document.getElementById('cf-btn-text');
+    const ok = document.getElementById('cf-ok');
+    const nombre = document.getElementById('cf-nombre').value;
+    const email = document.getElementById('cf-email').value;
+    const tel = document.getElementById('cf-tel').value;
+    const msg = document.getElementById('cf-msg').value;
+    btn.disabled = true;
+    btnText.textContent = 'Enviando...';
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nombre, email, tel, msg})
+      });
+      if(res.ok){
+        form.reset();
+        ok.classList.add('show');
+        btnText.textContent = 'Enviar mensaje →';
+      }
+    } catch(err) {
+      btnText.textContent = 'Error, intenta de nuevo';
+    }
+    btn.disabled = false;
+  });
+})();
+
 </script>
 </body>
 </html>
