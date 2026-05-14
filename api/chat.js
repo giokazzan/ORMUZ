@@ -90,7 +90,7 @@ FLUJO DE CONVERSACIÓN:
         },
         body: JSON.stringify({
           from: 'ORMUZ IA <onboarding@resend.dev>',
-          to: ['ormuzdetec@gmail.com'],
+          to: ['muibienadm@gmail.com'],
           subject: `🚀 Nuevo Lead ORMUZ — ${nombre}`,
           html: `
             <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;background:#f5f4f0;padding:40px 32px;border-radius:8px;">
