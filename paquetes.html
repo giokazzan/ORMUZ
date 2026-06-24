@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paquetes — ORMUZ</title>
+<meta name="description" content="Soluciones de tecnología e inteligencia artificial para negocios en Cancún y México. Desde bots WhatsApp hasta sistemas completos de gestión.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;1,200&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#0d0d0d;
+  --cream:#f5f4f0;
+  --gold:#8a7f5a;
+  --gold-light:#b8a96a;
+  --text:#c0beb8;
+  --muted:#555550;
+  --border:#1e1e1e;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── PANAL FONDO ── */
+.hex-bg{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
+  opacity:.025;
+}
+.hex-bg svg{width:100%;height:100%;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 4vw;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  background:rgba(13,13,13,.88);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:.6rem;
+  text-decoration:none;
+  font-size:.82rem;
+  font-weight:400;
+  letter-spacing:.28em;
+  color:var(--text);
+  transition:color .25s;
+}
+.nav-logo:hover{color:#fff;}
+.nav-dot{
+  width:6px;height:6px;
+  background:var(--gold);
+  border-radius:50%;
+}
+.nav-back{
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-decoration:none;
+  border-bottom:1px solid rgba(138,127,90,.3);
+  padding-bottom:2px;
+  transition:color .25s,border-color .25s;
+}
+.nav-back:hover{color:var(--gold-light);border-color:var(--gold-light);}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:18vh 6vw 8vh;
+  max-width:960px;
+}
+.hero-label{
+  font-size:.65rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1.8rem;
+}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,6vw,5rem);
+  font-weight:200;
+  line-height:1.1;
+  color:#eeecea;
+  margin-bottom:1.2rem;
+}
+.hero-title em{color:var(--gold);font-style:normal;}
+.hero-rule{width:36px;height:1px;background:var(--gold);margin:1.8rem 0;}
+.hero-sub{
+  font-size:.88rem;
+  color:var(--muted);
+  line-height:1.8;
+  max-width:500px;
+}
+
+/* ── GRID PAQUETES ── */
+.pkg-wrap{
+  position:relative;z-index:1;
+  padding:0 6vw 8vh;
+}
+.pkg-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:#1a1a18;
+  margin-bottom:1px;
+}
+@media(max-width:800px){.pkg-grid{grid-template-columns:1fr;}}
+
+.pkg-card{
+  background:var(--black);
+  padding:3rem 2.6rem;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  transition:background .3s;
+}
+.pkg-card:hover{background:#101010;}
+.pkg-card.featured{background:#0f0f0e;}
+.pkg-card.featured::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-light),transparent);
+}
+
+.pkg-badge{
+  font-size:.58rem;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1.6rem;
+}
+.pkg-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;
+  font-weight:200;
+  color:#eeecea;
+  line-height:1.05;
+  margin-bottom:.5rem;
+}
+.pkg-target{
+  font-size:.7rem;
+  color:#444440;
+  letter-spacing:.06em;
+  margin-bottom:2rem;
+  line-height:1.6;
+}
+.pkg-divider{
+  width:24px;height:1px;
+  background:var(--gold);
+  margin-bottom:2rem;
+  opacity:.6;
+}
+.pkg-price-wrap{margin-bottom:2.4rem;}
+.pkg-price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;
+  font-weight:200;
+  color:#eeecea;
+  line-height:1;
+}
+.pkg-price span{font-size:1.1rem;color:var(--gold);}
+.pkg-monthly{
+  font-size:.72rem;
+  color:var(--gold);
+  letter-spacing:.1em;
+  margin-top:.4rem;
+}
+
+.pkg-features{
+  list-style:none;
+  flex:1;
+  border-top:1px solid var(--border);
+  padding-top:1.8rem;
+  margin-bottom:2.4rem;
+}
+.pkg-features li{
+  font-size:.78rem;
+  color:#888880;
+  padding:.6rem 0;
+  border-bottom:1px solid #141414;
+  display:flex;gap:.7rem;
+  align-items:flex-start;
+  line-height:1.5;
+}
+.pkg-features li:last-child{border-bottom:none;}
+.pkg-features li::before{
+  content:'—';
+  color:var(--gold);
+  flex-shrink:0;
+}
+
+.pkg-cta{
+  display:inline-block;
+  font-size:.66rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--black);
+  background:#eeecea;
+  padding:.8rem 1.8rem;
+  text-decoration:none;
+  transition:background .25s;
+  align-self:flex-start;
+}
+.pkg-cta:hover{background:var(--gold-light);}
+.pkg-cta-ghost{
+  display:inline-block;
+  font-size:.66rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid #2a2a28;
+  padding:.8rem 1.8rem;
+  text-decoration:none;
+  transition:border-color .25s,color .25s;
+  align-self:flex-start;
+}
+.pkg-cta-ghost:hover{border-color:var(--gold);color:var(--gold-light);}
+
+/* ── CUSTOM ── */
+.pkg-custom{
+  background:#080808;
+  border-top:1px solid var(--border);
+  padding:5rem 2.6rem;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:3rem;
+  align-items:center;
+  position:relative;z-index:1;
+}
+@media(max-width:680px){.pkg-custom{grid-template-columns:1fr;}}
+.pkg-custom-label{
+  font-size:.62rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1rem;
+}
+.pkg-custom-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,3vw,2.8rem);
+  font-weight:200;
+  color:#eeecea;
+  line-height:1.2;
+  margin-bottom:1rem;
+}
+.pkg-custom-title em{color:var(--gold);font-style:normal;}
+.pkg-custom-desc{
+  font-size:.8rem;
+  color:var(--muted);
+  line-height:1.8;
+  max-width:460px;
+}
+.pkg-custom-btns{
+  display:flex;flex-direction:column;gap:1rem;
+  align-items:flex-start;
+}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:2.4rem 6vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+.footer-brand{
+  font-size:.72rem;
+  letter-spacing:.22em;
+  color:#333330;
+}
+.footer-links{
+  display:flex;gap:2rem;
+}
+.footer-links a{
+  font-size:.65rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#333330;
+  text-decoration:none;
+  transition:color .25s;
+}
+.footer-links a:hover{color:var(--gold);}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.v{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<!-- Fondo panal -->
+<div class="hex-bg">
+  <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs><pattern id="hexbg" x="0" y="0" width="70" height="80.8" patternUnits="userSpaceOnUse">
+      <polygon points="35,2 67,19.5 67,54.5 35,72 3,54.5 3,19.5" fill="none" stroke="#888" stroke-width="1"/>
+      <polygon points="35,42 67,59.5 67,94.5 35,112 3,94.5 3,59.5" fill="none" stroke="#888" stroke-width="1"/>
+    </pattern></defs>
+    <rect width="800" height="800" fill="url(#hexbg)"/>
+  </svg>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-dot"></div>
+    ORMUZ
+  </a>
+  <a href="index.html" class="nav-back">← Volver al sitio</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero reveal">
+  <div class="hero-label">Algunos paquetes disponibles</div>
+  <h1 class="hero-title">Soluciones que<br>funcionan <em>desde<br>el primer día.</em></h1>
+  <div class="hero-rule"></div>
+  <p class="hero-sub">Tres puntos de partida diseñados para distintos tamaños de negocio. Todos incluyen inteligencia artificial, mantenimiento y soporte. Todos se pueden personalizar.</p>
+</div>
+
+<!-- Paquetes -->
+<div class="pkg-wrap">
+  <div class="pkg-grid reveal">
+
+    <!-- BÁSICO -->
+    <div class="pkg-card">
+      <div class="pkg-badge">Bot Starter</div>
+      <div class="pkg-name">Básico</div>
+      <div class="pkg-target">Ferreterías · Restaurantes<br>Tiendas · Talleres</div>
+      <div class="pkg-divider"></div>
+      <div class="pkg-price-wrap">
+        <div class="pkg-price">$3,500 <span>MXN</span></div>
+        <div class="pkg-monthly">+ $1,500 MXN / mes</div>
+      </div>
+      <ul class="pkg-features">
+        <li>Bot WhatsApp con IA disponible 24/7</li>
+        <li>Responde preguntas y recibe pedidos</li>
+        <li>Hasta 500 conversaciones al mes</li>
+        <li>Registro de interacciones</li>
+        <li>Mantenimiento y soporte incluido</li>
+      </ul>
+      <a href="index.html#h3" class="pkg-cta-ghost">Hablar con la IA →</a>
+    </div>
+
+    <!-- SISTEMA COMPLETO -->
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Más solicitado</div>
+      <div class="pkg-name">Sistema<br>Completo</div>
+      <div class="pkg-target">Constructoras · Hoteles<br>Clínicas · Escuelas</div>
+      <div class="pkg-divider"></div>
+      <div class="pkg-price-wrap">
+        <div class="pkg-price">$15,000 <span>MXN</span></div>
+        <div class="pkg-monthly">+ $4,500 MXN / mes</div>
+      </div>
+      <ul class="pkg-features">
+        <li>Bot IA WhatsApp + sitio web propio</li>
+        <li>CRM con historial de clientes</li>
+        <li>Módulo de inventario o cotizaciones</li>
+        <li>Dashboard de operación en tiempo real</li>
+        <li>Hasta 2,000 conversaciones al mes</li>
+        <li>Soporte prioritario incluido</li>
+      </ul>
+      <a href="index.html#h3" class="pkg-cta">Iniciar proyecto →</a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="pkg-card">
+      <div class="pkg-badge">Ecosistema IA</div>
+      <div class="pkg-name">Premium</div>
+      <div class="pkg-target">Hoteles · Empresas medianas<br>Cadenas · Resorts</div>
+      <div class="pkg-divider"></div>
+      <div class="pkg-price-wrap">
+        <div class="pkg-price">$40,000 <span>MXN</span></div>
+        <div class="pkg-monthly">+ $9,000 MXN / mes</div>
+      </div>
+      <ul class="pkg-features">
+        <li>App web instalable (iOS & Android)</li>
+        <li>Bot IA multicanal + sitio de reservas</li>
+        <li>CRM completo con pipeline de ventas</li>
+        <li>Sistemas internos a medida</li>
+        <li>Dashboard de conversión y métricas</li>
+        <li>Conversaciones ilimitadas</li>
+        <li>Soporte dedicado incluido</li>
+      </ul>
+      <a href="index.html#h3" class="pkg-cta-ghost">Hablar con la IA →</a>
+    </div>
+
+  </div>
+
+  <!-- ¿No encaja? -->
+  <div class="pkg-custom reveal">
+    <div>
+      <div class="pkg-custom-label">¿No encaja del todo?</div>
+      <h2 class="pkg-custom-title">Cada proyecto<br>es <em>único.</em><br>El tuyo también.</h2>
+      <p class="pkg-custom-desc">Los paquetes son puntos de partida. Si tu negocio necesita algo distinto — más módulos, menos funciones, una integración específica — lo construimos exactamente como lo necesitas. Sin plantillas, sin límites.</p>
+    </div>
+    <div class="pkg-custom-btns">
+      <a href="index.html#h3" class="pkg-cta">Construir mi solución →</a>
+      <a href="index.html#servicios" class="pkg-cta-ghost">Ver todos los servicios →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-brand">ORMUZ · DESARROLLO Y TECNOLOGÍA · CANCÚN</div>
+  <div class="footer-links">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#servicios">Servicios</a>
+    <a href="index.html#h3">IA</a>
+    <a href="https://www.instagram.com/ormuz_tec" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('v'); io.unobserve(e.target); }
+}), { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
